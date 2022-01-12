@@ -5,6 +5,7 @@ from typing import Dict
 from traceback import TracebackException
 from collections import defaultdict
 from inspect import cleandoc
+from functools import partial
 from itertools import chain
 from random import choice
 from time import time
@@ -221,7 +222,7 @@ class BotGeneral(commands.Cog):
         )
         message = await ctx.send(embed=embed)
         process = self.bot.loop.run_in_executor(
-            None, subprocess.run, ["speedtest-cli", "--json"], capture_output=True
+            None, subprocess.run, partial(["speedtest-cli", "--json"]), capture_output=True
         )
         data = loads(process.stdout)
         embed = discord.Embed(title="速度回線テスト")
